@@ -62,7 +62,7 @@ library(ggplot2)
 g <- ggplot(data.frame(x = 1: nosim , y=means), aes(x = x, y = y))
 g <- g+geom_hline(yintercept <- t_mean, color = "red")+geom_line(size=1)
 g <- g+labs(x = "Number of Simulations", y = "Cummulative Mean")
-g <- ggtitle("Sample Mean of 1000 Samples of 40 Random Exponentials")
+g <- g+ggtitle("Sample Mean of 1000 Samples of 40 Random Exponentials")
 g
 ```
 As we can see from the graph, empirical mean is the consistent estimator of the theotrical mean, because it converges to the value of theotrical mean.
@@ -87,7 +87,7 @@ As we can see from the graph, both empirical and theotrical variance of the dist
 cumvar <- cumsum(exp_means - e_means)^2/seq_along(exp_means - 1))
 g <- g+geom_hline(yintercept <- t_var, color = "red")+geom_line(size=1)
 g <- g+labs(x = "Number of Simulations", y = "Cummulative Mean")
-g <- ggtitle("Sample Mean of 1000 Samples of 40 Random Exponentials")
+g <- g+ggtitle("Sample Mean of 1000 Samples of 40 Random Exponentials")
 g
 ```
 As we can see from the graph, sample variance is a consistant estimator of the theotrical variance, because it converges to the value of the theotrical variance.
@@ -99,7 +99,7 @@ g <- ggplot(data.frame(x = exp_means), aes(x = x))
 g <- g + geom_histogram(aes(y=...density...), color = "white", fill= "salmon")
 g <- g + stat_function(fun = "dnorm", color = "black" , args = list(mean = t_mean, sd = se))
 g <- g+geom_vline(xintercept <- t_mean, color = "black" , size =1)
-g <- ggtitle("Distribution of Average of 1000 Samples of 40 Random Exponential Variables")
+g <- g+ggtitle("Distribution of Average of 1000 Samples of 40 Random Exponential Variables")
 g <- g+xlabs("Means")
 g <- g+ylabs("Density")
 g
