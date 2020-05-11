@@ -1,0 +1,16 @@
+---
+title: "Similation od Distributed Averages of 40 iid exponentials"
+author: "Nandini Guntur"
+date: "5/11/2020"
+output: pdf_document
+---
+
+# Statistical Inference Course Project
+Part I - A Simulation Exercise
+## Overview :
+In this project we will be investigating the exponential distribution in R and compare it with the Central Limit Theoram. The exponential distribution can be simulated in R with rexp(n,lambda) where lambda is the rate parameter. The mean and standard deviation of the exponential distribution is 1/lambda. We will set lambda = 0.2 for all the simulations. We will investigate the distribution of 40 iid exponentials and do a thousand simulations.
+ 
+Setting a seed for reproducibility :
+
+'''{r, ECHO = TRUE}
+'''
