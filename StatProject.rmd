@@ -104,4 +104,4 @@ g <- g+xlabs("Means")
 g <- g+ylabs("Density")
 g
 ```
-As we can see from the graph, distribution of average of 1000 samples of 40 random exponential variable is normal
+As we can see from the graph, distribution of average of 1000 samples of 40 random exponential variable is normal.
