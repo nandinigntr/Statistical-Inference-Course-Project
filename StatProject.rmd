@@ -12,5 +12,96 @@ In this project we will be investigating the exponential distribution in R and c
  
 Setting a seed for reproducibility :
 
-'''{r, ECHO = TRUE}
-'''
+```{r, echo=TRUE}
+set.seed(111)
+```
+Setting a rate parameter lambda :
+
+```{r, echo=TRUE}
+lambda = 0.2
+```
+Setting a size of a sample :
+
+```{r, echo=TRUE}
+n = 40
+```
+Setting the number of simulations :
+
+```{r, echo=TRUE}
+nosim = 1000
+```
+Generating 10000 samples of 40 exponentials and calculating their mean values "
+
+```{r, echo=TRUE}
+r <- replicate(nosim, rexp(n,lambda))
+dim(r)
+```
+We can see that r is a matrix of 40 rows and 1000 columns. Since each column contains a sample of 40 exponentials, we will apply mean() to columns to obtain 1000 sample means.
+
+```{r, echo=TRUE}
+exp_means <- apply(r, 2, mean)
+```
+### 1. Show the sample mean and compare it to the theoritrical mean of the distribution
+Sample(empirical) Mean :
+
+```{r, echo=TRUE}
+e_mean <- mean(exp_means)
+e_mean
+```
+Theorical Mean :
+
+```{r, echo=TRUE}
+t_mean <- 1/lambda
+t_mean
+```
+We can see that the sample mean 5.02562 is a good approximation of the theorical mean od 5.
+
+```{r, echo=TRUE}
+means <- cumsum(exp_means)/(1:nosim)
+library(ggplot2)
+g <- ggplot(data.frame(x = 1: nosim , y=means), aes(x = x, y = y))
+g <- g+geom_hline(yintercept <- t_mean, color = "red")+geom_line(size=1)
+g <- g+labs(x = "Number of Simulations", y = "Cummulative Mean")
+g <- ggtitle("Sample Mean of 1000 Samples of 40 Random Exponentials")
+g
+```
+As we can see from the graph, empirical mean is the consistent estimator of the theotrical mean, because it converges to the value of theotrical mean.
+
+### 2. Show how variable the sample is (via variance) and compare it to the theotrical variance of the distribution.
+Sample Variance :
+
+```{r, echo=TRUE}
+e_var <- var(exp_means)
+e_var
+```
+Theotrical Variance of the distribution of sample means 
+
+```{r, echo=TRUE}
+t_var <- (1/(lambda*sqrt(n)))^2
+t_var
+```
+
+As we can see from the graph, both empirical and theotrical variance of the distribution of the sample means have value close to 0.6
+
+```{r, echo=TRUE}
+cumvar <- cumsum(exp_means - e_means)^2/seq_along(exp_means - 1))
+g <- g+geom_hline(yintercept <- t_var, color = "red")+geom_line(size=1)
+g <- g+labs(x = "Number of Simulations", y = "Cummulative Mean")
+g <- ggtitle("Sample Mean of 1000 Samples of 40 Random Exponentials")
+g
+```
+As we can see from the graph, sample variance is a consistant estimator of the theotrical variance, because it converges to the value of the theotrical variance.
+
+### 3. Show the distribution is approximately normal.
+
+```{r, echo=TRUE}
+g <- ggplot(data.frame(x = exp_means), aes(x = x))
+g <- g + geom_histogram(aes(y=...density...), color = "white", fill= "salmon")
+g <- g + stat_function(fun = "dnorm", color = "black" , args = list(mean = t_mean, sd = se))
+g <- g+geom_vline(xintercept <- t_mean, color = "black" , size =1)
+g <- ggtitle("Distribution of Average of 1000 Samples of 40 Random Exponential Variables")
+g <- g+xlabs("Means")
+g <- g+ylabs("Density")
+g
+```
+As we can see from the graph, distribution of average of 1000 samples of 40 random exponential variable is normal
